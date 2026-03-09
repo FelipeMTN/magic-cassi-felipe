@@ -45,6 +45,11 @@ export const Table: React.FC<TableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItems, setSelectedItems] = useState(new Set<string>());
   const tableId = useId();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Filter by search
   const filteredContent = useMemo(() => {
@@ -129,12 +134,14 @@ export const Table: React.FC<TableProps> = ({
           <Row fillWidth gap="16" paddingX="24" paddingY="12" borderBottom="neutral-alpha-weak">
             {selectable && (
               <Row textVariant="label-default-s" vertical="center" gap="16">
-                <Checkbox
-                  id={`${tableId}-select-all`}
-                  isChecked={allCurrentSelected || (someCurrentSelected && !allCurrentSelected)}
-                  isIndeterminate={someCurrentSelected && !allCurrentSelected}
-                  onToggle={toggleSelectAllCurrent}
-                />
+                {mounted && (
+                  <Checkbox
+                    id={`${tableId}-select-all`}
+                    isChecked={allCurrentSelected || (someCurrentSelected && !allCurrentSelected)}
+                    isIndeterminate={someCurrentSelected && !allCurrentSelected}
+                    onToggle={toggleSelectAllCurrent}
+                  />
+                )}
               </Row>
             )}
             {columns.map((col, cIdx) => (
@@ -161,11 +168,13 @@ export const Table: React.FC<TableProps> = ({
                     <Card fillWidth paddingY="8" paddingX="24" gap="16" vertical="center" border="transparent" background="transparent">
                       {selectable && (
                         <Row vertical="center" gap="16">
-                          <Checkbox
-                            id={`${tableId}-row-${id}`}
-                            isChecked={isSelected(id)}
-                            onToggle={() => toggleSelect(id)}
-                          />
+                          {mounted && (
+                            <Checkbox
+                              id={`${tableId}-row-${id}`}
+                              isChecked={isSelected(id)}
+                              onToggle={() => toggleSelect(id)}
+                            />
+                          )}
                         </Row>
                       )}
                       {columns.map((col, cIdx) => (
