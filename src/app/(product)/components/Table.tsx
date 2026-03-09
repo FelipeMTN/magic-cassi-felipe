@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox, Column, IconButton, Input, Row, Text, Card, Icon, DropdownWrapper, Button, ToggleButton, CountFx } from "@once-ui-system/core";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 
 type Align = "start" | "center" | "end";
 
@@ -44,6 +44,7 @@ export const Table: React.FC<TableProps> = ({
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItems, setSelectedItems] = useState(new Set<string>());
+  const tableId = useId();
 
   // Filter by search
   const filteredContent = useMemo(() => {
@@ -129,6 +130,7 @@ export const Table: React.FC<TableProps> = ({
             {selectable && (
               <Row textVariant="label-default-s" vertical="center" gap="16">
                 <Checkbox
+                  id={`${tableId}-select-all`}
                   isChecked={allCurrentSelected || (someCurrentSelected && !allCurrentSelected)}
                   isIndeterminate={someCurrentSelected && !allCurrentSelected}
                   onToggle={toggleSelectAllCurrent}
@@ -160,7 +162,7 @@ export const Table: React.FC<TableProps> = ({
                       {selectable && (
                         <Row vertical="center" gap="16">
                           <Checkbox
-                            key={`cb-${id}`}
+                            id={`${tableId}-row-${id}`}
                             isChecked={isSelected(id)}
                             onToggle={() => toggleSelect(id)}
                           />
