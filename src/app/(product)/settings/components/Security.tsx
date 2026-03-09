@@ -38,7 +38,7 @@ export function Security() {
   const providerMeta = useMemo(
     () =>
       ({
-        email: { name: "Email", icon: "email" },
+        email: { name: "E-mail", icon: "email" },
         google: { name: "Google", icon: "google" },
         github: { name: "GitHub", icon: "github" },
       }) as const,
@@ -73,7 +73,7 @@ export function Security() {
           fillWidth paddingX="24" paddingY="16"
           vertical="center" horizontal="between"
           borderBottom="neutral-alpha-medium">
-          <Text variant="heading-strong-s">Connected Accounts</Text>
+          <Text variant="heading-strong-s">Contas Conectadas</Text>
         </Row>
         <Column fillWidth>
           {identities.map((identity, index) => {
@@ -96,11 +96,11 @@ export function Security() {
                     <Text variant="label-default-m">{meta.name}</Text>
                     {identity.connected ? (
                       <Text variant="label-default-xs" onBackground="neutral-weak">
-                        Connected{identity.connectedAt ? `: ${identity.connectedAt}` : ""}{identity.detail ? ` · ${identity.detail}` : ""}
+                        Conectado{identity.connectedAt ? `: ${identity.connectedAt}` : ""}{identity.detail ? ` · ${identity.detail}` : ""}
                       </Text>
                     ) : (
                       <Text variant="label-default-xs" onBackground="neutral-weak">
-                        {identity.detail ?? "Not connected"}
+                        {identity.detail ?? "Nao conectado"}
                       </Text>
                     )}
                   </Column>
@@ -112,7 +112,7 @@ export function Security() {
                     variant={identity.connected ? "secondary" : "primary"}
                     onClick={() => toggleIdentity(identity.id)}
                   >
-                    {identity.connected ? "Disconnect" : "Connect"}
+                    {identity.connected ? "Desconectar" : "Conectar"}
                   </Button>
                 </Row>
               </Row>
@@ -128,31 +128,31 @@ export function Security() {
           fillWidth paddingX="24" paddingY="16"
           vertical="center" horizontal="between"
           borderBottom="neutral-alpha-medium">
-          <Text variant="heading-strong-s">Account Information</Text>
+          <Text variant="heading-strong-s">Informacoes da Conta</Text>
         </Row>
         <Row
           fillWidth paddingX="24" paddingY="16"
           vertical="center" horizontal="between">
-          <Text>Account created</Text>
+          <Text>Conta criada em</Text>
           <Text onBackground="neutral-weak" variant="label-default-s">{formatDate(authUser.createdAt)}</Text>
         </Row>
         <Row
           fillWidth paddingX="24" paddingY="16"
           vertical="center" horizontal="between"
           borderTop="neutral-alpha-weak">
-          <Text>Last sign in</Text>
+          <Text>Ultimo acesso</Text>
           <Text onBackground="neutral-weak" variant="label-default-s">{formatDate(authUser.lastSignIn)}</Text>
         </Row>
         <Row
           fillWidth paddingX="24" paddingY="16"
           vertical="center" horizontal="between"
           borderTop="neutral-alpha-weak">
-          <Text>Email verified</Text>
+          <Text>E-mail verificado</Text>
           <Row gap="8" vertical="center">
             {authUser.emailConfirmed ? (
-              <Tag variant="success">Verified</Tag>
+              <Tag variant="success">Verificado</Tag>
             ) : (
-              <Tag variant="warning">Not verified</Tag>
+              <Tag variant="warning">Nao verificado</Tag>
             )}
           </Row>
         </Row>

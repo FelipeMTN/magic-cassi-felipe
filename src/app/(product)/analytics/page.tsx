@@ -27,9 +27,12 @@ export default function Analytics() {
       <Column fillWidth gap="8" paddingX="16">
         <Row vertical="center" fillWidth horizontal="between" gap="8" wrap>
           <Heading variant="display-strong-s">
-            Analytics
+            Análises Financeiras
           </Heading>
         </Row>
+        <Text variant="body-default-m" onBackground="neutral-medium">
+          Acompanhe a evolução do seu patrimônio e o histórico dos seus aportes.
+        </Text>
       </Column>
       <Row fillWidth gap="8" m={{direction: "column-reverse"}}>
         <Row flex={3}>
@@ -37,42 +40,36 @@ export default function Analytics() {
             style={{height: "auto"}}
             minHeight={20}
             axis="x"
-            title={<Row gap="4" vertical="center">Revenue: <Text marginRight="8" onBackground="neutral-weak">$24,345</Text><Tag variant="success" prefixIcon="trendUp">12.5%</Tag></Row>}
+            title={<Row gap="4" vertical="center">Patrimônio: <Text marginRight="8" onBackground="neutral-weak">R$ 77.200</Text><Tag variant="success" prefixIcon="trendUp">8,2%</Tag></Row>}
             date={{
               start: new Date("2024-12-31"),
-              end: new Date("2025-01-31"),
-              format: "MMM dd",
+              end: new Date("2025-12-31"),
+              format: "MMM",
               selector: true,
               dual: true,
               presets: {
                 display: true,
-                granularity: "week"
+                granularity: "month"
               },
             }}
             grid="y"
             series={[
-              { key: "Current period", color: "blue" },
-              { key: "Previous period", color: "gray" }
+              { key: "Patrimônio atual", color: "success" },
+              { key: "Ano anterior", color: "gray" }
             ]}
             data={[
-              { date: "2025-01-01", "Current period": 4654, "Previous period": 1365 },
-              { date: "2025-01-02", "Current period": 1575, "Previous period": 3457 },
-              { date: "2025-01-03", "Current period": 5557, "Previous period": 4355 },
-              { date: "2025-01-04", "Current period": 6525, "Previous period": 5252 },
-              { date: "2025-01-05", "Current period": 5534, "Previous period": 6453 },
-              { date: "2025-01-06", "Current period": 4375, "Previous period": 3347 },
-              { date: "2025-01-07", "Current period": 5456, "Previous period": 2245 },
-              { date: "2025-01-08", "Current period": 5425, "Previous period": 2142 },
-              { date: "2025-01-09", "Current period": 2412, "Previous period": 1041 },
-              { date: "2025-01-10", "Current period": 4375, "Previous period": 1137 },
-              { date: "2025-01-11", "Current period": 3345, "Previous period": 7234 },
-              { date: "2025-01-12", "Current period": 5123, "Previous period": 1312 },
-              { date: "2025-01-13", "Current period": 6912, "Previous period": 4291 },
-              { date: "2025-01-14", "Current period": 8654, "Previous period": 3165 },
-              { date: "2025-01-15", "Current period": 4234, "Previous period": 2023 },
-              { date: "2025-01-16", "Current period": 3423, "Previous period": 1142 },
-              { date: "2025-01-17", "Current period": 2312, "Previous period": 231 },
-              { date: "2025-01-18", "Current period": 1234, "Previous period": 3423 }
+              { date: "2025-01-01", "Patrimônio atual": 45000, "Ano anterior": 32000 },
+              { date: "2025-02-01", "Patrimônio atual": 47500, "Ano anterior": 34500 },
+              { date: "2025-03-01", "Patrimônio atual": 50200, "Ano anterior": 37000 },
+              { date: "2025-04-01", "Patrimônio atual": 52800, "Ano anterior": 39200 },
+              { date: "2025-05-01", "Patrimônio atual": 55100, "Ano anterior": 41500 },
+              { date: "2025-06-01", "Patrimônio atual": 58200, "Ano anterior": 43800 },
+              { date: "2025-07-01", "Patrimônio atual": 61500, "Ano anterior": 46000 },
+              { date: "2025-08-01", "Patrimônio atual": 64000, "Ano anterior": 48500 },
+              { date: "2025-09-01", "Patrimônio atual": 67200, "Ano anterior": 51000 },
+              { date: "2025-10-01", "Patrimônio atual": 70500, "Ano anterior": 53200 },
+              { date: "2025-11-01", "Patrimônio atual": 73800, "Ano anterior": 55800 },
+              { date: "2025-12-01", "Patrimônio atual": 77200, "Ano anterior": 58500 }
             ]}
           />
         </Row>
@@ -97,11 +94,11 @@ export default function Analytics() {
             }}
           />
           <Column fill center gap="8" padding="40">
-            <Row textVariant="label-default-xs" onBackground="brand-medium" align="center" marginBottom="20">16d left</Row>
+            <Row textVariant="label-default-xs" onBackground="brand-medium" align="center" marginBottom="20">Meta Anual</Row>
             <RadialGauge
               width={280}
               height={280}
-              value={42}
+              value={64}
               hue="success"
               unit="%"
               line={{
@@ -110,8 +107,8 @@ export default function Analytics() {
                 length: 24,
               }}
             />
-            <Text variant="label-default-s" onBackground="neutral-weak" align="center" marginTop="24">Monthly target</Text>
-            <Text variant="heading-strong-l" align="center">$27,000</Text>
+            <Text variant="label-default-s" onBackground="neutral-weak" align="center" marginTop="24">Objetivo de Patrimônio</Text>
+            <Text variant="heading-strong-l" align="center">R$ 120.000</Text>
           </Column>
         </Column>
       </Row>
@@ -119,71 +116,65 @@ export default function Analytics() {
       <Row fillWidth gap="8" m={{direction: "column"}}>
         <LineChart
           axis="x"
-          title={<Row gap="4" vertical="center">Customers: <Text onBackground="neutral-weak" marginRight="8">1,248</Text><Tag variant="danger" prefixIcon="trendDown">1.75%</Tag></Row>}
+          title={<Row gap="4" vertical="center">Aportes Mensais: <Text onBackground="neutral-weak" marginRight="8">R$ 2.800</Text><Tag variant="success" prefixIcon="trendUp">12%</Tag></Row>}
           date={{
             start: new Date("2024-12-31"),
-            end: new Date("2025-01-31"),
-            format: "dd",
+            end: new Date("2025-12-31"),
+            format: "MMM",
             selector: true,
             dual: true,
             presets: {
               display: true,
-              granularity: "week"
+              granularity: "month"
             },
           }}
           grid="y"
           series={[
-            { key: "Current period", color: "blue" },
-            { key: "Previous period", color: "gray" }
+            { key: "Aporte realizado", color: "success" },
+            { key: "Aporte planejado", color: "gray" }
           ]}
           data={[
-            { date: "2025-01-01", "Current period": 264, "Previous period": 365 },
-            { date: "2025-01-02", "Current period": 355, "Previous period": 157 },
-            { date: "2025-01-03", "Current period": 757, "Previous period": 755 },
-            { date: "2025-01-04", "Current period": 255, "Previous period": 252 },
-            { date: "2025-01-05", "Current period": 954, "Previous period": 453 },
-            { date: "2025-01-06", "Current period": 1475, "Previous period": 347 },
-            { date: "2025-01-07", "Current period": 646, "Previous period": 945 },
-            { date: "2025-01-08", "Current period": 565, "Previous period": 142 },
-            { date: "2025-01-09", "Current period": 442, "Previous period": 241 },
-            { date: "2025-01-10", "Current period": 435, "Previous period": 437 },
-            { date: "2025-01-11", "Current period": 235, "Previous period": 534 },
-            { date: "2025-01-12", "Current period": 513, "Previous period": 312 },
-            { date: "2025-01-13", "Current period": 292, "Previous period": 291 },
-            { date: "2025-01-14", "Current period": 864, "Previous period": 865 },
-            { date: "2025-01-15", "Current period": 824, "Previous period": 423 },
-            { date: "2025-01-16", "Current period": 393, "Previous period": 12 },
-            { date: "2025-01-17", "Current period": 232, "Previous period": 91 },
-            { date: "2025-01-18", "Current period": 124, "Previous period": 523 }
+            { date: "2025-01-01", "Aporte realizado": 2800, "Aporte planejado": 2500 },
+            { date: "2025-02-01", "Aporte realizado": 2500, "Aporte planejado": 2500 },
+            { date: "2025-03-01", "Aporte realizado": 2700, "Aporte planejado": 2500 },
+            { date: "2025-04-01", "Aporte realizado": 2600, "Aporte planejado": 2500 },
+            { date: "2025-05-01", "Aporte realizado": 2300, "Aporte planejado": 2500 },
+            { date: "2025-06-01", "Aporte realizado": 3100, "Aporte planejado": 2500 },
+            { date: "2025-07-01", "Aporte realizado": 3300, "Aporte planejado": 2500 },
+            { date: "2025-08-01", "Aporte realizado": 2500, "Aporte planejado": 2500 },
+            { date: "2025-09-01", "Aporte realizado": 2700, "Aporte planejado": 2500 },
+            { date: "2025-10-01", "Aporte realizado": 3300, "Aporte planejado": 2500 },
+            { date: "2025-11-01", "Aporte realizado": 3100, "Aporte planejado": 2500 },
+            { date: "2025-12-01", "Aporte realizado": 2800, "Aporte planejado": 2500 }
           ]}
         />
         <Row fillWidth>
           <BarChart
             data-viz-style="sequential"
-            title="Revenue by product category"
-            description="January 2025"
+            title="Distribuição por Categoria de Meta"
+            description="2025"
             axis="none"
             date={{
               start: new Date("2024-12-31"),
-              end: new Date("2025-01-31"),
-              format: "MMM dd",
+              end: new Date("2025-12-31"),
+              format: "MMM",
               selector: true,
               dual: true,
               presets: {
                 display: true,
-                granularity: "week"
+                granularity: "month"
               },
             }}
             legend={{
               position: "bottom-center"
             }}
             series={[
-              { key: "Software", color: "aqua" },
-              { key: "Services", color: "pink" },
-              { key: "Hardware", color: "indigo" }
+              { key: "Reserva Emergência", color: "aqua" },
+              { key: "Aposentadoria", color: "pink" },
+              { key: "Viagens", color: "indigo" }
             ]}
             data={[
-              { label: "Jan 2025", "Software": 14500, "Services": 6200, "Hardware": 3645 }
+              { label: "2025", "Reserva Emergência": 25500, "Aposentadoria": 240000, "Viagens": 15500 }
             ]}
           />
         </Row>
@@ -191,56 +182,50 @@ export default function Analytics() {
       <Row fillWidth gap="8" m={{direction: "column"}}>
         <LineChart
           axis="x"
-          title={<Row gap="4" vertical="center">Conversion rate: <Text onBackground="neutral-weak" marginRight="8">3.2%</Text><Tag variant="success" prefixIcon="trendUp">8.3%</Tag></Row>}
+          title={<Row gap="4" vertical="center">Rendimentos: <Text onBackground="neutral-weak" marginRight="8">R$ 8.450</Text><Tag variant="success" prefixIcon="trendUp">10,2%</Tag></Row>}
           date={{
             start: new Date("2024-12-31"),
-            end: new Date("2025-01-31"),
-            format: "dd",
+            end: new Date("2025-12-31"),
+            format: "MMM",
             selector: true,
             dual: true,
             presets: {
               display: true,
-              granularity: "week"
+              granularity: "month"
             },
           }}
           grid="y"
           series={[
-            { key: "Current period", color: "blue" },
-            { key: "Previous period", color: "gray" }
+            { key: "Rendimentos 2025", color: "success" },
+            { key: "Rendimentos 2024", color: "gray" }
           ]}
           data={[
-            { date: "2025-01-01", "Current period": 2.8, "Previous period": 2.4 },
-            { date: "2025-01-02", "Current period": 3.1, "Previous period": 2.7 },
-            { date: "2025-01-03", "Current period": 3.5, "Previous period": 3.2 },
-            { date: "2025-01-04", "Current period": 2.9, "Previous period": 2.8 },
-            { date: "2025-01-05", "Current period": 4.2, "Previous period": 3.5 },
-            { date: "2025-01-06", "Current period": 3.8, "Previous period": 3.1 },
-            { date: "2025-01-07", "Current period": 3.3, "Previous period": 2.9 },
-            { date: "2025-01-08", "Current period": 3.6, "Previous period": 3.0 },
-            { date: "2025-01-09", "Current period": 2.7, "Previous period": 2.5 },
-            { date: "2025-01-10", "Current period": 3.9, "Previous period": 3.3 },
-            { date: "2025-01-11", "Current period": 3.2, "Previous period": 2.8 },
-            { date: "2025-01-12", "Current period": 4.1, "Previous period": 3.7 },
-            { date: "2025-01-13", "Current period": 3.4, "Previous period": 3.1 },
-            { date: "2025-01-14", "Current period": 3.7, "Previous period": 3.4 },
-            { date: "2025-01-15", "Current period": 3.0, "Previous period": 2.6 },
-            { date: "2025-01-16", "Current period": 3.5, "Previous period": 3.2 },
-            { date: "2025-01-17", "Current period": 2.9, "Previous period": 2.7 },
-            { date: "2025-01-18", "Current period": 3.3, "Previous period": 3.0 }
+            { date: "2025-01-01", "Rendimentos 2025": 380, "Rendimentos 2024": 270 },
+            { date: "2025-02-01", "Rendimentos 2025": 410, "Rendimentos 2024": 295 },
+            { date: "2025-03-01", "Rendimentos 2025": 450, "Rendimentos 2024": 320 },
+            { date: "2025-04-01", "Rendimentos 2025": 480, "Rendimentos 2024": 340 },
+            { date: "2025-05-01", "Rendimentos 2025": 520, "Rendimentos 2024": 365 },
+            { date: "2025-06-01", "Rendimentos 2025": 560, "Rendimentos 2024": 390 },
+            { date: "2025-07-01", "Rendimentos 2025": 610, "Rendimentos 2024": 420 },
+            { date: "2025-08-01", "Rendimentos 2025": 650, "Rendimentos 2024": 450 },
+            { date: "2025-09-01", "Rendimentos 2025": 700, "Rendimentos 2024": 475 },
+            { date: "2025-10-01", "Rendimentos 2025": 750, "Rendimentos 2024": 510 },
+            { date: "2025-11-01", "Rendimentos 2025": 810, "Rendimentos 2024": 545 },
+            { date: "2025-12-01", "Rendimentos 2025": 880, "Rendimentos 2024": 580 }
           ]}
         />
         <PieChart
           data-viz-style="sequential"
-          title="Traffic sources"
+          title="Alocação de Investimentos"
           date={{
             start: new Date("2024-12-31"),
-            end: new Date("2025-01-31"),
-            format: "MMM dd",
+            end: new Date("2025-12-31"),
+            format: "MMM",
             selector: true,
             dual: true,
             presets: {
               display: true,
-              granularity: "week"
+              granularity: "month"
             },
           }}
           legend={{
@@ -252,10 +237,10 @@ export default function Analytics() {
             key: "value",
           }}
           data={[
-            { name: "Organic Search", value: 42 },
-            { name: "Direct", value: 28 },
-            { name: "Social Media", value: 18 },
-            { name: "Referral", value: 12 }
+            { name: "Renda Fixa", value: 45 },
+            { name: "Ações", value: 25 },
+            { name: "Fundos Imobiliários", value: 18 },
+            { name: "Internacional", value: 12 }
           ]}
         />
       </Row>

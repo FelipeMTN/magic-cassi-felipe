@@ -4,8 +4,8 @@ import { Column, Row, Heading, Input, Text, Button, PasswordInput, MediaUpload, 
 import { useState } from "react";
 
 function General() {
-  const [name, setName] = useState("Lorant One");
-  const [email, setEmail] = useState("lorant@once-ui.com");
+  const [name, setName] = useState("Usuário");
+  const [email, setEmail] = useState("usuario@email.com");
   const [password, setPassword] = useState("password");
   const [avatar, setAvatar] = useState("/images/lorant.jpg");
   const [isEditingName, setIsEditingName] = useState(false);
@@ -20,7 +20,7 @@ function General() {
             Avatar
           </Heading>
           <Text variant="label-default-s" onBackground="neutral-weak">
-            Upload your public avatar
+            Envie sua foto de perfil
           </Text>
         </Column>
         <MediaUpload minWidth={4} maxWidth={4} minHeight={4} maxHeight={4} radius="full"
@@ -28,17 +28,17 @@ function General() {
           emptyState={
             <Row gap="4" vertical="center">
               <Icon size="xs" name="plus" />
-              <Text variant="label-default-s">Add</Text>
+              <Text variant="label-default-s">Adicionar</Text>
             </Row>
           } />
       </Row>
       <Row fillWidth gap="20" paddingY="24" paddingLeft="16" paddingRight="24" border="neutral-alpha-medium" background="surface" s={{direction: "column"}}>
         <Column fillWidth gap="2" vertical="center" paddingLeft="12">
           <Heading variant="heading-strong-xs">
-            Name
+            Nome
           </Heading>
           <Text variant="label-default-s" onBackground="neutral-weak">
-            Change your name
+            Altere seu nome
           </Text>
         </Column>
         {isEditingName ? (
@@ -46,12 +46,12 @@ function General() {
             <Input
               id="name"
               height="s"
-              placeholder="Name"
+              placeholder="Nome"
               value={name}
               onChange={(e) => setName(e.target.value)}
               maxLength={20}
             />
-            <Button size="s" label="Save" onClick={() => setIsEditingName(false)} />
+            <Button size="s" label="Salvar" onClick={() => setIsEditingName(false)} />
           </Row>
         ) : (
           <Row vertical="center" gap="24" minHeight="48">
@@ -63,10 +63,10 @@ function General() {
       <Row fillWidth gap="20" paddingY="24" paddingLeft="16" paddingRight="24" border="neutral-alpha-medium" background="surface" s={{direction: "column"}}>
         <Column fillWidth gap="2" vertical="center" paddingLeft="12">
           <Heading variant="heading-strong-xs">
-            Email
+            E-mail
           </Heading>
           <Text variant="label-default-s" onBackground="neutral-weak">
-            Change your email address
+            Altere seu endereço de e-mail
           </Text>
         </Column>
         {isEditingEmail ? (
@@ -74,12 +74,12 @@ function General() {
             <Input
               id="email"
               height="s"
-              placeholder="Email"
+              placeholder="E-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               maxLength={64}
             />
-            <Button size="s" label="Save" onClick={() => setIsEditingEmail(false)} />
+            <Button size="s" label="Salvar" onClick={() => setIsEditingEmail(false)} />
           </Row>
         ) : (
           <Row vertical="center" gap="24" minHeight="48">
@@ -91,10 +91,10 @@ function General() {
       <Row fillWidth gap="20" paddingY="24" paddingLeft="16" paddingRight="24" border="neutral-alpha-medium" background="surface" s={{direction: "column"}}>
         <Column fillWidth gap="2" vertical="center" paddingLeft="12">
           <Heading variant="heading-strong-xs">
-            Password
+            Senha
           </Heading>
           <Text variant="label-default-s" onBackground="neutral-weak">
-            Change your password
+            Altere sua senha
           </Text>
         </Column>
         {isEditingPassword ? (
@@ -102,12 +102,12 @@ function General() {
             <PasswordInput
               id="password"
               height="s"
-              placeholder="New password"
+              placeholder="Nova senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               maxLength={64}
             />
-            <Button size="s" label="Save" onClick={() => setIsEditingPassword(false)} />
+            <Button size="s" label="Salvar" onClick={() => setIsEditingPassword(false)} />
           </Row>
         ) : (
           <Row minHeight="48">
@@ -118,13 +118,13 @@ function General() {
       <Row fillWidth gap="20" paddingY="24" paddingLeft="16" paddingRight="24" bottomRadius="l" border="danger-alpha-medium" background="danger-medium" s={{direction: "column"}}>
         <Column fillWidth gap="2" vertical="center" paddingLeft="12">
           <Heading variant="heading-strong-xs">
-            Delete account
+            Excluir conta
           </Heading>
           <Text variant="label-default-s" onBackground="danger-weak">
-            Permanently delete your account
+            Exclua permanentemente sua conta
           </Text>
         </Column>
-        <Button size="s" label="Delete" variant="danger"/>
+        <Button size="s" label="Excluir" variant="danger"/>
       </Row>
     </Column>
   );
