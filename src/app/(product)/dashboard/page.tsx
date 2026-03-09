@@ -6,7 +6,6 @@ import {
   Text,
   Grid,
   Line,
-  Avatar,
   Button,
   Scroller,
   StatusIndicator,
@@ -18,7 +17,7 @@ import {
   RadialGauge
 } from "@once-ui-system/core";
 import { baseURL, product } from "@/resources";
-import TableClient from "./components/TableClient";
+import GoalsTableClient from "./components/GoalsTableClient";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -39,9 +38,10 @@ interface StatCardProps extends React.ComponentProps<typeof Card> {
   change: string;
   positive?: boolean;
   href?: string;
+  subtitle?: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ title, value, change, positive = true, href, ...flex }) => (
+const StatCard: React.FC<StatCardProps> = ({ title, value, change, positive = true, href, subtitle, ...flex }) => (
   <Card minWidth={12} href={href} padding="20" gap="12" radius="l" overflow="hidden" fillWidth direction="column" {...flex}>
     <Background
       position="absolute"
@@ -68,76 +68,133 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, positive = tr
     <Heading variant="display-strong-xs">
       {value}
     </Heading>
+    {subtitle && (
+      <Text variant="body-default-xs" onBackground="neutral-weak">
+        {subtitle}
+      </Text>
+    )}
   </Card>
 );
 
-interface ActivityItemProps {
-  avatar: string;
-  action: string;
-  time: string;
+interface GoalItemProps {
+  name: string;
+  status: 'ahead' | 'on-track' | 'behind' | 'critical';
+  progress: number;
   href?: string;
+  icon: string;
+  targetDate: string;
+}
+
+const GoalItem: React.FC<GoalItemProps> = ({ name, status, progress, icon, targetDate, href = "#" }) => {
+  const getStatusLabel = (s: string) => {
+    switch (s) {
+      case 'ahead': return 'Adiantado';
+      case 'on-track': return 'No caminho';
+      case 'behind': return 'Atrasado';
+      case 'critical': return 'Crítico';
+      default: return s;
+    }
+  };
+
+  const getStatusColor = (s: string): "green" | "yellow" | "red" | "gray" => {
+    switch (s) {
+      case 'ahead': return "green";
+      case 'on-track': return "green";
+      case 'behind': return "yellow";
+      case 'critical': return "red";
+      default: return "gray";
+    }
+  };
+
+  return (
+    <Card direction="column" background="transparent" href={href} border="transparent" fillWidth>
+      <Row fillWidth horizontal="between" height="64" vertical="center" paddingX="24">
+        <Row vertical="center" gap="12">
+          <Icon name={icon} size="xs" onBackground="neutral-weak"/>
+          <Column gap="2">
+            <Text variant="body-default-s">{name}</Text>
+            <Text variant="body-default-xs" onBackground="neutral-weak">{targetDate}</Text>
+          </Column>
+        </Row>
+        <Row vertical="center" gap="12">
+          <Text variant="body-default-xs" onBackground="neutral-weak">{progress}%</Text>
+          <Text variant="body-default-xs" onBackground="neutral-weak">{getStatusLabel(status)}</Text>
+          <StatusIndicator color={getStatusColor(status)}/>
+        </Row>
+      </Row>
+      <Line />
+    </Card>
+  );
+};
+
+interface ContributionItemProps {
+  month: string;
+  planned: string;
+  actual: string;
+  difference: number;
   icon: string;
 }
 
-const ActivityItem: React.FC<ActivityItemProps> = ({ avatar, action, time, href, icon }) => (
-  <Card direction="column" href={href} background="transparent" border="transparent" fillWidth>
+const ContributionItem: React.FC<ContributionItemProps> = ({ month, planned, actual, difference, icon }) => (
+  <Card direction="column" background="transparent" border="transparent" fillWidth>
     <Row fillWidth horizontal="between" paddingX="24" height="64" vertical="center">
       <Column fillWidth gap="8">
-        <Text variant="body-default-s">
-          {action}
-        </Text>
+        <Text variant="body-default-s">{month}</Text>
         <Row vertical="center" gap="12" data-scaling="90">
-          <Avatar size="xs" src={avatar} />
           <Text variant="label-default-s" onBackground="neutral-weak">
-            {time}
+            Planejado: {planned}
           </Text>
         </Row>
       </Column>
-      <Icon name={icon} size="xs" onBackground="neutral-weak"/>
-    </Row>
-    <Line />
-  </Card>
-);
-
-interface StatusItemProps {
-  name: string;
-  status: string;
-  href?: string;
-  icon: string;
-}
-
-const StatusItem: React.FC<StatusItemProps> = ({ name, status, icon, href = "#" }) => (
-  <Card direction="column" background="transparent" href={href} border="transparent" fillWidth>
-    <Row fillWidth horizontal="between" height="64" vertical="center" paddingX="24">
       <Row vertical="center" gap="12">
-        <Icon name={icon} size="xs" onBackground="neutral-weak"/>
-        <Text variant="body-default-s">
-          {name}
-        </Text>
-      </Row>
-      <Row vertical="center" gap="12">
-        <Text variant="body-default-xs" onBackground="neutral-weak">{status}</Text>
-        <StatusIndicator color={getStatusVariant(status)}/>
+        <Column gap="2" horizontal="end">
+          <Text variant="label-default-s">{actual}</Text>
+          <Text 
+            variant="body-default-xs" 
+            onBackground={difference >= 0 ? "success-weak" : "danger-weak"}
+          >
+            {difference >= 0 ? '+' : ''}{difference}%
+          </Text>
+        </Column>
+        <Icon name={icon} size="xs" onBackground={difference >= 0 ? "success-weak" : "danger-weak"}/>
       </Row>
     </Row>
     <Line />
   </Card>
 );
-
-const getStatusVariant = (status: string): "green" | "yellow" | "red" | "gray" => {
-  switch (status.toLowerCase()) {
-    case "on track":
-      return "green";
-    case "at risk":
-      return "red";
-    case "delayed":
-      return "gray";
-    default:
-      return "gray";
-  }
-};
 
 export default function Dashboard() {
+  // Dados de demonstração - em produção viriam do banco
+  const patrimonyData = [
+    { date: "2025-01-01", "Patrimônio atual": 45000, "Projeção conservadora": 45000 },
+    { date: "2025-02-01", "Patrimônio atual": 47500, "Projeção conservadora": 46500 },
+    { date: "2025-03-01", "Patrimônio atual": 50200, "Projeção conservadora": 48000 },
+    { date: "2025-04-01", "Patrimônio atual": 52800, "Projeção conservadora": 49500 },
+    { date: "2025-05-01", "Patrimônio atual": 55100, "Projeção conservadora": 51000 },
+    { date: "2025-06-01", "Patrimônio atual": 58200, "Projeção conservadora": 52500 },
+    { date: "2025-07-01", "Patrimônio atual": 61500, "Projeção conservadora": 54000 },
+    { date: "2025-08-01", "Patrimônio atual": 64000, "Projeção conservadora": 55500 },
+    { date: "2025-09-01", "Patrimônio atual": 67200, "Projeção conservadora": 57000 },
+    { date: "2025-10-01", "Patrimônio atual": 70500, "Projeção conservadora": 58500 },
+    { date: "2025-11-01", "Patrimônio atual": 73800, "Projeção conservadora": 60000 },
+    { date: "2025-12-01", "Patrimônio atual": 77200, "Projeção conservadora": 61500 },
+  ];
+
+  const goals = [
+    { name: "Reserva de Emergência", status: "on-track" as const, progress: 85, icon: "shield", targetDate: "Jun 2025" },
+    { name: "Viagem Europa", status: "ahead" as const, progress: 62, icon: "globe", targetDate: "Dez 2025" },
+    { name: "Entrada Apartamento", status: "behind" as const, progress: 28, icon: "home", targetDate: "Dez 2027" },
+    { name: "Aposentadoria", status: "on-track" as const, progress: 12, icon: "sun", targetDate: "Jan 2050" },
+  ];
+
+  const contributions = [
+    { month: "Janeiro 2025", planned: "R$ 2.500", actual: "R$ 2.800", difference: 12 },
+    { month: "Dezembro 2024", planned: "R$ 2.500", actual: "R$ 2.500", difference: 0 },
+    { month: "Novembro 2024", planned: "R$ 2.500", actual: "R$ 2.200", difference: -12 },
+    { month: "Outubro 2024", planned: "R$ 2.500", actual: "R$ 3.000", difference: 20 },
+    { month: "Setembro 2024", planned: "R$ 2.500", actual: "R$ 2.600", difference: 4 },
+  ];
+
   return (
     <>
       <Schema
@@ -150,24 +207,24 @@ export default function Dashboard() {
       <Column fillWidth gap="8" paddingX="16">
         <Row vertical="center" fillWidth horizontal="between" gap="8" wrap>
           <Heading variant="display-strong-s">
-            Dashboard
+            Painel Financeiro
           </Heading>
-          <Button prefixIcon="plus" size="s" data-border="rounded">
-            New <Row s={{hide: true}} marginLeft="4">Project</Row>
+          <Button prefixIcon="plus" size="s" data-border="rounded" href="/metas">
+            Nova <Row s={{hide: true}} marginLeft="4">Meta</Row>
           </Button>
         </Row>
         <Text variant="body-default-m" onBackground="neutral-medium">
-          Welcome back, Lorant! <Row inline s={{hide: true}}>Here's what's happening today.</Row>
+          Olá! <Row inline s={{hide: true}}>Veja como está seu progresso financeiro.</Row>
         </Text>
       </Column>
 
       <Scroller fadeColor="surface">
         <Row fitWidth flex={1}>
           {[
-            { title: "Revenue", value: "$24,345", change: "12.5%", positive: true },
-            { title: "Visitors", value: "2,345", change: "8.3%", positive: true },
-            { title: "Conversion", value: "3.2%", change: "1.8%", positive: false },
-            { title: "Session", value: "4m 32s", change: "10.3%", positive: true },
+            { title: "Patrimônio Total", value: "R$ 77.200", change: "8,2%", positive: true, subtitle: "vs. mês anterior" },
+            { title: "Aporte Mensal", value: "R$ 2.800", change: "12%", positive: true, subtitle: "acima do planejado" },
+            { title: "Reserva Emergência", value: "85%", change: "5%", positive: true, subtitle: "da meta de 6 meses" },
+            { title: "Próx. Meta", value: "182 dias", change: "No caminho", positive: true, subtitle: "Viagem Europa" },
           ].map((stat, index) => (
             <StatCard
               key={index}
@@ -175,6 +232,7 @@ export default function Dashboard() {
               value={stat.value}
               change={stat.change}
               positive={stat.positive}
+              subtitle={stat.subtitle}
               marginRight={index < 3 ? "8" : "0"}
               href="/analytics"
             />
@@ -191,44 +249,25 @@ export default function Dashboard() {
             border="neutral-medium"
             radius="l"
             axis="x"
-            title="Revenue growth"
-            description="January, 2025"
+            title="Evolução do Patrimônio"
+            description="2025"
             date={{
               start: new Date("2024-12-31"),
-              end: new Date("2025-01-31"),
-              format: "MMM dd",
+              end: new Date("2025-12-31"),
+              format: "MMM",
               selector: true,
               dual: true,
               presets: {
                 display: true,
-                granularity: "week"
+                granularity: "month"
               },
             }}
             grid="y"
             series={[
-              { key: "Current period", color: "blue" },
-              { key: "Previous period", color: "gray" }
+              { key: "Patrimônio atual", color: "success" },
+              { key: "Projeção conservadora", color: "gray" }
             ]}
-            data={[
-              { date: "2025-01-01", "Current period": 4654, "Previous period": 1365 },
-              { date: "2025-01-02", "Current period": 1575, "Previous period": 3457 },
-              { date: "2025-01-03", "Current period": 5557, "Previous period": 4355 },
-              { date: "2025-01-04", "Current period": 6525, "Previous period": 5252 },
-              { date: "2025-01-05", "Current period": 5534, "Previous period": 6453 },
-              { date: "2025-01-06", "Current period": 4375, "Previous period": 3347 },
-              { date: "2025-01-07", "Current period": 5456, "Previous period": 2245 },
-              { date: "2025-01-08", "Current period": 5425, "Previous period": 2142 },
-              { date: "2025-01-09", "Current period": 2412, "Previous period": 1041 },
-              { date: "2025-01-10", "Current period": 4375, "Previous period": 1137 },
-              { date: "2025-01-11", "Current period": 3345, "Previous period": 7234 },
-              { date: "2025-01-12", "Current period": 5123, "Previous period": 1312 },
-              { date: "2025-01-13", "Current period": 6912, "Previous period": 4291 },
-              { date: "2025-01-14", "Current period": 8654, "Previous period": 3165 },
-              { date: "2025-01-15", "Current period": 4234, "Previous period": 2023 },
-              { date: "2025-01-16", "Current period": 3423, "Previous period": 1142 },
-              { date: "2025-01-17", "Current period": 2312, "Previous period": 231 },
-              { date: "2025-01-18", "Current period": 1234, "Previous period": 3423 }
-            ]}
+            data={patrimonyData}
           />
         </Row>
         <Column flex={1} radius="l" border="neutral-medium" overflow="hidden">
@@ -252,11 +291,13 @@ export default function Dashboard() {
             }}
           />
           <Column fill center gap="8" padding="40">
-            <Row textVariant="label-default-xs" onBackground="brand-medium" align="center" marginBottom="20">16d left</Row>
+            <Row textVariant="label-default-xs" onBackground="brand-medium" align="center" marginBottom="20">
+              Meta Anual
+            </Row>
             <RadialGauge
               width={280}
               height={280}
-              value={42}
+              value={64}
               hue="success"
               unit="%"
               line={{
@@ -265,8 +306,13 @@ export default function Dashboard() {
                 length: 24,
               }}
             />
-            <Text variant="label-default-s" onBackground="neutral-weak" align="center" marginTop="24">Monthly target</Text>
-            <Text variant="heading-strong-l" align="center">$27,000</Text>
+            <Text variant="label-default-s" onBackground="neutral-weak" align="center" marginTop="24">
+              Objetivo de investimento
+            </Text>
+            <Text variant="heading-strong-l" align="center">R$ 120.000</Text>
+            <Text variant="body-default-xs" onBackground="neutral-weak" align="center">
+              Faltam R$ 42.800
+            </Text>
           </Column>
         </Column>
       </Row>
@@ -275,35 +321,25 @@ export default function Dashboard() {
         <Column fillWidth border="neutral-medium" radius="l" overflow="hidden" height={20}>
           <Row vertical="center" horizontal="between" fillWidth paddingLeft="24" paddingRight="12" paddingY="12" gap="m" wrap>
             <Heading wrap="nowrap" variant="heading-strong-s">
-              Project status
+              Suas Metas
             </Heading>
             <Row gap="4">
-              <Button weight="default" variant="secondary" size="s">
-                Weekly
-              </Button>
-              <Button weight="default" size="s">
-                Monthly
-              </Button>
-              <Button weight="default" variant="secondary" size="s">
-                Yearly
+              <Button weight="default" variant="secondary" size="s" href="/metas">
+                Ver todas
               </Button>
             </Row>
           </Row>
           
           <Column fillWidth borderTop="neutral-medium" overflowY="auto">
-            {[
-              { name: "Mobile App Development", status: "At Risk", icon: "code" },
-              { name: "Marketing Campaign", status: "On Track", icon: "sparkle" },
-              { name: "Database Migration", status: "On Track", icon: "code" },
-              { name: "Website Redesign", status: "On Track", icon: "sparkle" },
-              { name: "Product Launch", status: "Delayed", icon: "sparkle" },
-              { name: "Server Upgrade", status: "Delayed", icon: "code" },
-            ].map((project, index) => (
-              <StatusItem
+            {goals.map((goal, index) => (
+              <GoalItem
                 key={index}
-                name={project.name}
-                status={project.status}
-                icon={project.icon}
+                name={goal.name}
+                status={goal.status}
+                progress={goal.progress}
+                icon={goal.icon}
+                targetDate={goal.targetDate}
+                href="/roadmap"
               />
             ))}
           </Column>
@@ -312,64 +348,28 @@ export default function Dashboard() {
         <Column border="neutral-medium" radius="l" fillWidth overflow="hidden" height={20}>
           <Row fillWidth vertical="center" horizontal="between" paddingLeft="24" paddingRight="12" paddingY="12" gap="16" wrap>
             <Heading wrap="nowrap" variant="heading-strong-s">
-              Recent activity
+              Aportes Recentes
             </Heading>
-            <Button size="s" weight="default" variant="secondary" suffixIcon="chevronRight">
-              View all
+            <Button size="s" weight="default" variant="secondary" suffixIcon="chevronRight" href="/analytics">
+              Histórico
             </Button>
           </Row>
           <Column fillWidth borderTop="neutral-medium" overflowY="auto">
-            {[
-              {
-                avatar: "/images/lorant.jpg",
-                action: "Completed the Website Redesign task",
-                time: "2 hours ago",
-                icon: "check"
-              },
-              {
-                avatar: "/images/lorant.jpg",
-                action: "Commented on Mobile App Development",
-                time: "4 hours ago",
-                icon: "chat"
-              },
-              {
-                avatar: "/images/lorant.jpg",
-                action: "Created a new task in Marketing Campaign",
-                time: "Yesterday",
-                icon: "plus"
-              },
-              {
-                avatar: "/images/lorant.jpg",
-                action: "Completed 3 tasks in Product Launch",
-                time: "Yesterday",
-                icon: "check"
-              },
-              {
-                avatar: "/images/lorant.jpg",
-                action: "Created a new task in Marketing Campaign",
-                time: "2 days ago",
-                icon: "plus"
-              },
-              {
-                avatar: "/images/lorant.jpg",
-                action: "Completed 3 tasks in Product Launch",
-                time: "4 days ago",
-                icon: "check"
-              }
-            ].map((activity, index) => (
-              <ActivityItem 
+            {contributions.map((contribution, index) => (
+              <ContributionItem 
                 key={index}
-                avatar={activity.avatar}
-                action={activity.action}
-                time={activity.time}
-                icon={activity.icon}
+                month={contribution.month}
+                planned={contribution.planned}
+                actual={contribution.actual}
+                difference={contribution.difference}
+                icon={contribution.difference >= 0 ? "trendUp" : "trendDown"}
               />
             ))}
           </Column>
         </Column>
       </Grid>
       
-      <TableClient />
+      <GoalsTableClient />
     </>
   );
-};
+}

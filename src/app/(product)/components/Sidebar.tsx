@@ -34,30 +34,26 @@ const Sidebar: React.FC<SidebarProps> = ({ ...flex }) => {
             marginBottom="8"
             marginLeft="16"
           >
-            Home
+            Início
           </Text>
           <ToggleButton href="/dashboard" fillWidth horizontal="start" selected={pathname === "/dashboard"}>
             <Row padding="4" vertical="center" gap="12" textVariant="label-default-s">
               <Icon name="home" onBackground="neutral-weak" size="xs" />
-              Dashboard
+              Painel
             </Row>
           </ToggleButton>
           <ToggleButton href="/analytics" fillWidth horizontal="start" selected={pathname === "/analytics"}>
             <Row padding="4" vertical="center" gap="12" textVariant="label-default-s">
               <Icon name="trend" onBackground="neutral-weak" size="xs" />
-              Analytics
+              Análises
             </Row>
           </ToggleButton>
-          <ToggleButton
-            fillWidth
-            horizontal="start"
-            selected={pathname === "reports"}
-          >
+          <ToggleButton href="/simulador" fillWidth horizontal="start" selected={pathname === "/simulador"}>
             <Row padding="4" vertical="center" gap="12" textVariant="label-default-s">
-              <Icon name="pages" onBackground="neutral-weak" size="xs" />
-              Reports
-              <Tag variant="neutral" size="s">
-                New
+              <Icon name="chart" onBackground="neutral-weak" size="xs" />
+              Simulador
+              <Tag variant="brand" size="s">
+                Novo
               </Tag>
             </Row>
           </ToggleButton>
@@ -67,24 +63,24 @@ const Sidebar: React.FC<SidebarProps> = ({ ...flex }) => {
 
         <Column fillWidth gap="4">
           <Text variant="body-default-xs" onBackground="neutral-weak" marginY="8" marginLeft="16">
-            Manage
+            Metas
           </Text>
-          <ToggleButton fillWidth horizontal="start" href="/users" selected={pathname === "/users"}>
+          <ToggleButton fillWidth horizontal="start" href="/roadmap" selected={pathname === "/roadmap"}>
             <Row padding="4" gap="12" vertical="center" textVariant="label-default-s">
-              <Line width="16" />
-              Users
+              <Icon name="target" onBackground="neutral-weak" size="xs" />
+              Roadmap
             </Row>
           </ToggleButton>
-          <ToggleButton fillWidth horizontal="start" selected={pathname === "/roles"}>
+          <ToggleButton fillWidth horizontal="start" href="/reserva" selected={pathname === "/reserva"}>
             <Row padding="4" vertical="center" gap="12" textVariant="label-default-s">
-              <Line width="16" />
-              Roles
+              <Icon name="shield" onBackground="neutral-weak" size="xs" />
+              Reserva Emergência
             </Row>
           </ToggleButton>
-          <ToggleButton fillWidth horizontal="start" selected={pathname === "/permissions"}>
+          <ToggleButton fillWidth horizontal="start" href="/metas" selected={pathname === "/metas" || pathname.startsWith("/metas/")}>
             <Row padding="4" gap="12" vertical="center" textVariant="label-default-s">
-              <Line width="16" />
-              Permissions
+              <Icon name="flag" onBackground="neutral-weak" size="xs" />
+              Todas as Metas
             </Row>
           </ToggleButton>
         </Column>
@@ -94,20 +90,19 @@ const Sidebar: React.FC<SidebarProps> = ({ ...flex }) => {
         <Column fill gap="4">
           <Row fillWidth horizontal="between" vertical="center" paddingY="8" paddingX="16">
             <Text variant="body-default-xs" onBackground="neutral-weak">
-              Projects
+              Configurações
             </Text>
-            <IconButton tooltip="Create" tooltipPosition="left" variant="secondary" icon="plus" size="s" />
           </Row>
-          <ToggleButton fillWidth horizontal="start" selected={pathname === "overview"}>
+          <ToggleButton fillWidth horizontal="start" href="/settings" selected={pathname === "/settings"}>
             <Row padding="4" gap="12" vertical="center" textVariant="label-default-s">
-              <Line width="16" />
-              Overview
+              <Icon name="settings" onBackground="neutral-weak" size="xs" />
+              Preferências
             </Row>
           </ToggleButton>
-          <ToggleButton fillWidth horizontal="start" selected={pathname === "projects"}>
+          <ToggleButton fillWidth horizontal="start" href="/perfil" selected={pathname === "/perfil"}>
             <Row padding="4" gap="12" vertical="center" textVariant="label-default-s">
-              <Line width="16" />
-              My projects
+              <Icon name="user" onBackground="neutral-weak" size="xs" />
+              Meu Perfil
             </Row>
           </ToggleButton>
         </Column>

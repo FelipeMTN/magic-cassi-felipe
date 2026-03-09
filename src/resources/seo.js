@@ -104,43 +104,73 @@ const landing = {
 const product = {
   dashboard: {
     path: "/dashboard",
-    title: "Dashboard - Magic Convert",
+    title: "Painel Financeiro - Organizador de Metas",
     description:
-      "Dashboard for Magic Convert.",
+      "Acompanhe seu patrimônio, aportes e metas financeiras em um painel completo.",
     image: "/images/og/magic-convert.jpg",
     robots: "index,follow",
     canonical: "https://convert.once-ui.com/dashboard",
-    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "en" }],
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
   },
   analytics: {
     path: "/analytics",
-    title: "Analytics - Magic Convert",
+    title: "Análises - Organizador de Metas",
     description:
-      "Analytics for Magic Convert.",
+      "Análises detalhadas do seu progresso financeiro e evolução patrimonial.",
     image: "/images/og/magic-convert.jpg",
     robots: "index,follow",
     canonical: "https://convert.once-ui.com/analytics",
-    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "en" }],
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
   },
-  users: {
-    path: "/users",
-    title: "Users - Magic Convert",
+  simulador: {
+    path: "/simulador",
+    title: "Simulador de Cenários - Organizador de Metas",
     description:
-      "Users for Magic Convert.",
+      "Simule diferentes cenários de investimento e veja como atingir suas metas mais rápido.",
     image: "/images/og/magic-convert.jpg",
     robots: "index,follow",
-    canonical: "https://convert.once-ui.com/analytics",
-    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "en" }],
+    canonical: "https://convert.once-ui.com/simulador",
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
+  },
+  roadmap: {
+    path: "/roadmap",
+    title: "Roadmap Financeiro - Organizador de Metas",
+    description:
+      "Visualize o progresso das suas metas com alertas inteligentes e status em tempo real.",
+    image: "/images/og/magic-convert.jpg",
+    robots: "index,follow",
+    canonical: "https://convert.once-ui.com/roadmap",
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
+  },
+  reserva: {
+    path: "/reserva",
+    title: "Reserva de Emergência - Organizador de Metas",
+    description:
+      "Gerencie sua reserva de emergência e proteja-se contra imprevistos financeiros.",
+    image: "/images/og/magic-convert.jpg",
+    robots: "index,follow",
+    canonical: "https://convert.once-ui.com/reserva",
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
+  },
+  metas: {
+    path: "/metas",
+    title: "Minhas Metas - Organizador de Metas",
+    description:
+      "Gerencie todas as suas metas financeiras em um só lugar.",
+    image: "/images/og/magic-convert.jpg",
+    robots: "index,follow",
+    canonical: "https://convert.once-ui.com/metas",
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
   },
   settings: {
     path: "/settings",
-    title: "Settings - Magic Convert",
+    title: "Configurações - Organizador de Metas",
     description:
-      "Settings for Magic Convert.",
+      "Configure suas preferências e perfil financeiro.",
     image: "/images/og/magic-convert.jpg",
     robots: "index,follow",
     canonical: "https://convert.once-ui.com/settings",
-    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "en" }],
+    alternates: [{ href: "https://convert.once-ui.com", hrefLang: "pt-BR" }],
   }
 }
 
